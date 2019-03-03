@@ -86,10 +86,6 @@ class Singleton implements Cloneable, Serializable {
 	*/
 }
 
-enum SingletonByEnum {
-	instance;
-}
-
 public class SingletonTest {
 	public static void main(String[] args) {
 		Singleton instance1 = Singleton.getInstance();
@@ -102,10 +98,8 @@ public class SingletonTest {
 		// here it creates the different object
 		Singleton instance4 = null;
 		try {
-			Class clazz = Class
-					.forName("com.cisco.designpattern.singleton.Singleton");
-			Constructor<Singleton> constructor = clazz
-					.getDeclaredConstructor(null);
+			Class clazz = Class.forName("com.cisco.designpattern.singleton.Singleton");
+			Constructor<Singleton> constructor = clazz.getDeclaredConstructor(null);
 			constructor.setAccessible(true);
 			instance4 = constructor.newInstance(); // we cant do as
 													// clazz.newInstace();///it
@@ -130,8 +124,7 @@ public class SingletonTest {
 			ObjectOutputStream oop = new ObjectOutputStream(fileOutputStream);
 			oop.writeObject(instance1);
 
-			ObjectInputStream oip = new ObjectInputStream(new FileInputStream(
-					"test.ser"));
+			ObjectInputStream oip = new ObjectInputStream(new FileInputStream("test.ser"));
 			// here it creates the new object every time.
 			instance6 = (Singleton) oip.readObject();
 		} catch (Exception e) {
@@ -141,9 +134,6 @@ public class SingletonTest {
 		// through static inner class
 		Singleton instance7 = Singleton.getInstanceByInnerClass();
 
-		// through enum
-		SingletonByEnum instance8 = SingletonByEnum.instance;
-
 		SingletonTest test = new SingletonTest();
 		test.print("instance1 by simple null check ", instance1);
 		test.print("instance2 by simple null check ", instance2);
@@ -152,14 +142,11 @@ public class SingletonTest {
 		test.print("instance5 by clone ", instance5);
 		test.print("instance6 by deserialization ", instance6);
 		test.print("instance7 by inner class ", instance7);
-		test.print("instance8 by Enum ", instance8);
-		
-		
+
 	}
 
 	public void print(String name, Object instance) {
-		System.out.println(name + ", and its hashcode is "
-				+ System.identityHashCode(instance));
+		System.out.println(name + ", and its hashcode is " + System.identityHashCode(instance));
 	}
 
 }
